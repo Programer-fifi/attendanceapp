@@ -282,8 +282,61 @@ try {
     echo ("<br>duplicate entry: " . $o->getMessage());
 }
 
-//iterate over all the 105 students
-//for each of them choose max 6 random courses, from 1 to 6
+// If any record already exists in the table, delete it
+clearTable($dbo, "course_registration"); // Added semicolon
 
-for($i=1;$i<=105;$i++)
+$c = "insert into course_registration
+(student_id, course_id, session_id) 
+values
+(:sid, :cid, :sessid)";
+
+$s = $dbo->conn->prepare($c);
+
+// Iterate over all the 105 students
+// For each of them, choose up to 6 random courses, from 1 to 6
+for($i = 1; $i <= 105; $i++) {
+    for($j = 0; $j < 6; $j++) {
+        $cid = rand(1, 6);
+
+        // Insert the selected course into course_registration table for
+        // session 1 and student_id $i
+        try {
+            $s->execute([":sid" => $i, ":cid" => $cid, ":sessid" => 1]);
+        } catch(PDOException $pe) {
+            // Handle exception
+        }
+    }
+}
+
+
+
+
+//if any record already there in the table delete then
+clearTable($dbo,"course_allotment");
+$c = "insert into course_allotment
+(faculty_id, course_id, session_id)
+values
+(:fid, :cid, :sessid)";
+$s = $dbo->conn->prepare($c);
+//iterate over all the 4 teachers
+//for each of them choose max 1 random course, from 1 to 6
+
+for($i=1;$i<=4;$i++)
+{
+    for($j=0;$j<2;$j++)
+    {
+        $cid=rand(1,6);
+        //insert the selected course into course_registration table for
+        //session 1 and student_id $i
+        try{
+            $s->execute([":fid"=>$i,":cid"=>$cid,":sessid"=>1]);
+        }
+        catch(PDOException $pe)
+        {
+            
+        }
+
+    
+    }
+}
 ?>
