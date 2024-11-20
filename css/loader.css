@@ -1,0 +1,33 @@
+.lockscreen
+{
+    width:100%;
+    height:100%;
+    background-color: white;
+    position: fixed;
+    opacity: .4;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.applylockscreen
+{
+    opacity: .6;
+    visibility: visible;
+}
+.spinner
+{
+    width:80px;
+    height: 80px;
+    border-radius: 50%;
+    border-top:solid 5px rgb(67, 37, 125);
+    border-right:solid 5px rgb(114, 18, 162);
+    border-bottom:solid 5px rgb(147, 10, 152);
+    border-left:solid 5px transparent;
+    animation:spin 2s linear infinite;
+}
+@keyframes spin {
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
